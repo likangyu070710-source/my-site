@@ -59,7 +59,11 @@
      screen — so a longer sentence makes it three lines and pushes the
      rest of the page down. Nothing in the stylesheet would catch that,
      because the stylesheet has not changed. The longest line here is 42,
-     which leaves fourteen characters of room. */
+     which leaves fourteen characters of room.
+
+     The 56 assumes 0.6em per character, which is the widest the stack can
+     produce. Consolas is narrower — it fits about 61 — but Menlo does not,
+     so do not raise the limit to what one machine happens to show. */
   function lineFor(n) {
     if (n === 1) { return 'It switched itself off.'; }
     if (n === 2) { return 'It switched itself off again.'; }
