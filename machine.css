@@ -199,6 +199,10 @@
 .machine__status {
   margin: 1rem 0 0;
   padding: 10px 14px;
+  /* 3em is two lines at 1.5 line-height; the +20px is this box's own
+     padding. Do not simplify to 3em — box-sizing is border-box, so a bare
+     3em would leave 25px of content and a two-line message would still
+     push the strip open by 20px. */
   min-height: calc(3em + 20px);
   background: var(--surface);
   border-left: 2px solid var(--ink);

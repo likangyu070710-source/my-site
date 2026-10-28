@@ -411,6 +411,10 @@ h1 {
 .idea__state-key { color: var(--dim); }
 .idea__state-value { color: var(--ink); }
 
+/* The two that stopped, struck through: the joke lands and it costs no
+   colour. Required by the brief — do not delete without replacing it. */
+.idea__state-value.is-struck { text-decoration: line-through; }
+
 
 /* ---- the index at the foot of every page ------------------------------
    Linear, not a ring: the home page has nothing before it, and the last
