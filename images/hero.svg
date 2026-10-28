@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300"
      role="img" aria-labelledby="heroTitle heroDesc">
-  <title id="heroTitle">A box seen from the side, with a hand reaching in to switch it off</title>
+  <title id="heroTitle">A box seen from the side, with a metal arm reaching in to switch it off</title>
   <desc id="heroDesc">A line drawing in section: a closed box with a switch on its front face,
-  and an arm entering from the right edge of the picture to turn that switch off.</desc>
+  and a metal arm entering from the right edge of the picture, its finger resting on the switch.</desc>
 
   <rect width="1200" height="300" fill="#F4F2EC"/>
 

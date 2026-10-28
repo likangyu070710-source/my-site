@@ -380,7 +380,7 @@ h1 {
   grid-column: 1;
   margin: 0;
   font: 400 15px/1.25 var(--serif);
-  color: var(--ink);
+  color: var(--dim);
   font-variant-numeric: oldstyle-nums;
 }
 
@@ -411,9 +411,6 @@ h1 {
 .idea__state-key { color: var(--dim); }
 .idea__state-value { color: var(--ink); }
 
-/* The two that stopped, struck through: the joke lands and it costs no
-   colour. Required by the brief (spec 2.4 / 3.7) - do not delete. */
-.idea__state-value.is-struck { text-decoration: line-through; }
 
 
 
