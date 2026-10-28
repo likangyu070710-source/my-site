@@ -12,7 +12,11 @@
 
   if (!box || !list.length) { return; }
 
-  var chosen = list[Math.floor(Math.random() * list.length)];
+  /* The last quotation in the list is the one already printed in the box
+     above it, so it is left out of the draw: otherwise one visit in
+     fifteen shows the same sentence twice on one screen. */
+  var pool = Array.prototype.slice.call(list, 0, -1);
+  var chosen = pool[Math.floor(Math.random() * pool.length)];
 
   var text = chosen.querySelector('blockquote p');
   var source = chosen.querySelector('cite');

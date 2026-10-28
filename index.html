@@ -9,8 +9,9 @@
 </head>
 <body>
 
-<!-- nav.js fills this from nav.html. See the note in that file. -->
-<div data-nav></div>
+<!-- nav.js replaces this from nav.html. The fallback link is what is left
+     when the page is opened from the file system and fetch cannot run. -->
+<div data-nav><p class="nav-fallback"><a href="index.html">The Useless Wiki</a></p></div>
 
 <main class="page">
   <h1>The Useless Wiki</h1>
@@ -19,29 +20,42 @@
   <figure class="hero">
     <img src="images/hero.svg" width="1200" height="300"
          alt="A line drawing of an open box with a switch on the front, and an arm reaching out of the lid to turn that switch off.">
+    <figcaption>Plate 01 · the machine, in section</figcaption>
   </figure>
 
+  <!-- The title is the link, and a pseudo-element stretches the link over
+       the whole card, so the whole card is clickable without the link's
+       accessible name becoming the whole card. -->
   <ul class="cards">
-    <li>
-      <a class="card" href="machine.html">
-        <p class="card__label">The machine</p>
-        <h2>The Patient Hand</h2>
+    <li class="card">
+      <div class="card__tab">
+        <span class="card__label">The machine</span>
+        <span class="card__no" aria-hidden="true">01</span>
+      </div>
+      <div class="card__body">
+        <h2><a href="machine.html">The Patient Hand</a></h2>
         <p>One switch. It turns itself off, and waits for you to try again.</p>
-      </a>
+      </div>
     </li>
-    <li>
-      <a class="card" href="quotes.html">
-        <p class="card__label">Nonsense</p>
-        <h2>Fifteen quotations</h2>
+    <li class="card">
+      <div class="card__tab">
+        <span class="card__label">Nonsense</span>
+        <span class="card__no" aria-hidden="true">02</span>
+      </div>
+      <div class="card__body">
+        <h2><a href="quotes.html">Fifteen quotations</a></h2>
         <p>Statements that mean a great deal and say nothing at all.</p>
-      </a>
+      </div>
     </li>
-    <li>
-      <a class="card" href="project.html">
-        <p class="card__label">Ideas</p>
-        <h2>Six proposals</h2>
+    <li class="card">
+      <div class="card__tab">
+        <span class="card__label">Ideas</span>
+        <span class="card__no" aria-hidden="true">03</span>
+      </div>
+      <div class="card__body">
+        <h2><a href="project.html">Six proposals</a></h2>
         <p>Things that would work, and would not help — none of them built.</p>
-      </a>
+      </div>
     </li>
   </ul>
 

@@ -1,36 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300"
      role="img" aria-labelledby="heroTitle heroDesc">
-  <title id="heroTitle">A box with its lid open, and a hand reaching for the switch</title>
-  <desc id="heroDesc">A line drawing of the useless machine: an open box, a switch on its front,
-  and an arm coming out of the lid to turn that switch off.</desc>
+  <title id="heroTitle">A box seen from the side, lid open, with a hand reaching for the switch</title>
+  <desc id="heroDesc">A line drawing in section: an open box, a switch on its front face,
+  and an arm reaching in from the right to turn that switch off.</desc>
 
-  <rect width="1200" height="300" fill="#f4f2ec"/>
+  <rect width="1200" height="300" fill="#F4F2EC"/>
 
-  <!-- the box -->
-  <rect x="350" y="118" width="500" height="156" rx="4" fill="#fbfaf7" stroke="#202122" stroke-width="4"/>
+  <!-- the box, seen from the side -->
+  <rect x="330" y="112" width="540" height="152" rx="2" fill="#FBFAF7" stroke="#1F2023" stroke-width="4"/>
 
   <!-- the lid, standing open -->
-  <g stroke="#202122" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <line x1="346" y1="118" x2="314" y2="40"/>
-    <line x1="854" y1="118" x2="886" y2="40"/>
-    <line x1="314" y1="40" x2="886" y2="40"/>
-  </g>
-
-  <!-- the arm, the palm, and one finger reaching for the switch: three
-       shapes, so the picture still reads at half this size -->
-  <g fill="#c2410c">
-    <rect x="584" y="16" width="42" height="132" rx="21"/>
-    <circle cx="605" cy="170" r="32"/>
-    <rect x="440" y="158" width="176" height="24" rx="12"/>
+  <g stroke="#1F2023" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="326" y1="112" x2="290" y2="34"/>
+    <line x1="874" y1="112" x2="910" y2="34"/>
+    <line x1="290" y1="34" x2="910" y2="34"/>
   </g>
 
   <!-- the switch on the front face -->
-  <rect x="404" y="176" width="98" height="38" rx="19" fill="#fbfaf7" stroke="#202122" stroke-width="4"/>
-  <circle cx="482" cy="195" r="12" fill="#202122"/>
+  <rect x="376" y="176" width="104" height="34" rx="17" fill="#FBFAF7" stroke="#1F2023" stroke-width="4"/>
+  <circle cx="452" cy="193" r="11" fill="#1F2023"/>
 
-  <!-- a small plate in the corner, because an empty box looks unfinished -->
-  <g stroke="#b8b3a8" stroke-width="3" stroke-linecap="round">
-    <line x1="742" y1="224" x2="806" y2="224"/>
-    <line x1="742" y1="238" x2="784" y2="238"/>
+  <!-- the hand: one arm, one palm, one finger — three shapes that still
+       read as a hand when the drawing is shown at half this size -->
+  <g fill="#C2410C">
+    <rect x="700" y="164" width="220" height="40" rx="20"/>
+    <circle cx="690" cy="184" r="30"/>
+    <rect x="470" y="170" width="230" height="26" rx="13"/>
+  </g>
+
+  <!-- the plate in the corner -->
+  <g stroke="#CFC9BC" stroke-width="3" stroke-linecap="round">
+    <line x1="760" y1="228" x2="828" y2="228"/>
+    <line x1="760" y1="242" x2="806" y2="242"/>
   </g>
 </svg>

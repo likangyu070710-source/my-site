@@ -1,16 +1,42 @@
-/* The Useless Wiki — one page, one control.
-   Everything here is shared by every page of the site. */
+/* The Useless Wiki — the sheet every page shares.
+   ----------------------------------------------------------------------
+   Archive cards, not a document. Three weights of rule carry the whole
+   hierarchy — --line for what merely separates, --line-2 for what holds a
+   card together, --ink for where a section ends — so a card and a list of
+   quotations can look different and still belong to the same catalogue.
+
+   One rule holds the colour together: orange is only ever on something you
+   can operate (a link, the current page, the switch knob, the hand).
+   Numbers, plates and status values are --ink or --dim, never --accent.
+   ---------------------------------------------------------------------- */
 
 :root {
-  --paper: #fbfaf7;
-  --ink: #202122;
-  --dim: #6b7075;
-  --accent: #c2410c;
-  --line: #e6e3dc;
-  --wash: #f4f2ec;
+  --paper: #FBFAF7;
+  --surface: #F4F2EC;
+  --ink: #1F2023;
+  --dim: #5C6166;
+  --line: #E6E3DC;
+  --line-2: #CFC9BC;
+  --accent: #C2410C;
+  --accent-wash: #F6E4D8;
+
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --w-narrow: 26rem;   /* the machine's one sentence */
+  --w-read: 34rem;     /* body, quotations, tagline */
+  --w-wide: 44rem;     /* cards, ideas, nav, pager */
+
+  --rail: clamp(1.25rem, 4vw, 5rem);
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ---- the shell -------------------------------------------------------
+   Left-aligned throughout. Only the plate on the front page and the
+   footer are centred; everything else starts at the same edge, which is
+   what makes four different pages read as one catalogue. */
 
 body {
   margin: 0;
@@ -19,48 +45,123 @@ body {
   flex-direction: column;
   background: var(--paper);
   color: var(--ink);
-  font: 18px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font: 18px/1.62 var(--sans);
+}
+
+main, .site-nav, .pager, footer, .nav-fallback {
+  width: 100%;
+  /* --w-wide is the width of the *content*, so the padding is added on
+     top of it; otherwise the three cards drop to two columns. */
+  max-width: calc(var(--w-wide) + 2 * var(--rail));
+  margin-inline: auto;
+  padding-inline: var(--rail);
 }
 
 main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem 1.5rem;
+  text-align: left;
+  padding-block: 4rem 2rem;
 }
 
-/* The machine page is short enough to sit in the middle of the screen.
-   A page with fifteen quotations on it is not: centring it would push
-   the top half out of reach, so those pages start at the top instead. */
-main.page {
-  justify-content: flex-start;
-  padding-top: 3rem;
-}
+main.page { padding-top: 3.5rem; }
+
+/* ---- type ------------------------------------------------------------ */
 
 h1 {
   margin: 0;
-  font: 400 clamp(38px, 6.5vw, 54px)/1.12 Georgia, "Times New Roman", serif;
-  letter-spacing: -.01em;
+  font: 400 clamp(40px, 6vw, 56px)/1.08 var(--serif);
+  letter-spacing: -.02em;
 }
 
+/* The newspaper standfirst: a short rule, then the sentence. It hangs off
+   the h1 rather than sitting in a box, so the page still starts flat. */
 .tagline {
-  margin: .7rem 0 2.5rem;
-  max-width: 30rem;
-  font-size: 19px;
+  margin: 1.5rem 0 0;
+  max-width: var(--w-read);
+  font-size: 18px;
   color: var(--dim);
 }
 
-/* ---- home page hero ---- */
+.tagline::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  margin-bottom: .75rem;
+  background: var(--ink);
+}
+
+.note {
+  margin: 3rem 0 0;
+  max-width: var(--w-read);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- navigation, written once in nav.html ----------------------------
+   The site name sits left, the pages sit right; the current page is
+   marked with a 2px orange rule drawn inside the link box, so nothing
+   jumps by two pixels when it becomes current. */
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1.75rem;
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.site-nav .brand {
+  margin-right: auto;          /* pushes the three pages into one group */
+  font: 400 16px/1.4 var(--serif);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.site-nav a:hover { color: var(--ink); }
+
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+/* ---- the plate on the front page ------------------------------------- */
 
 .hero {
-  width: 100%;
-  max-width: 40rem;
-  margin: 0 0 2rem;
+  margin: 2.5rem 0 0;
+  max-width: var(--w-wide);
+  margin-inline: auto;
   border: 1px solid var(--line);
-  background: var(--wash);
+  background: var(--surface);
+  text-align: center;
 }
 
 .hero img {
@@ -69,297 +170,369 @@ h1 {
   height: auto;
 }
 
-/* ---- the control ---- */
-
-.press {
-  padding: .95rem 2.8rem;
-  font: inherit;
-  font-size: 21px;
-  color: #fff;
-  background: var(--accent);
-  border: 0;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform .08s ease, background-color .2s ease;
-}
-
-/* The button dips when you press it — the only part of the machine that
-   ever appears to do anything. */
-.press:active { transform: scale(.97); }
-
-.press:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.status {
-  margin: 2rem 0 0;
-  min-height: 1.6em;
-  font-size: 19px;
-  color: var(--dim);
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity .25s ease, transform .25s ease;
-}
-
-/* Added for as long as a line is showing, so the fade runs both ways. */
-.status.show {
-  opacity: 1;
-  transform: none;
-}
-
-.note {
-  margin: 2.5rem 0 0;
-  max-width: 30rem;
-  font-size: 15px;
+.hero figcaption {
+  padding: .7rem .9rem;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: .10em;
+  text-transform: uppercase;
   color: var(--dim);
 }
 
-/* ---- the index at the foot of every page ---- */
+/* ---- the cards: one record each --------------------------------------
+   The tab at the top is the index label and the number; the body holds
+   the title as a link. The link is stretched over the whole card with a
+   pseudo-element, so the reading order stays "heading, then link" while
+   the clicking area stays "anywhere on the card". */
 
-.pager {
-  display: flex;
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 1rem;
-  width: 100%;
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 0 1.5rem 2rem;
-  font-size: 16px;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.pager a {
-  color: var(--accent);
-  text-decoration: none;
+.card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  border-radius: 0;
 }
 
-.pager a:hover { text-decoration: underline; }
-
-.pager a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.pager .next {
-  margin-left: auto;
-  text-align: right;
-}
-
-footer {
-  padding: 1rem 1.5rem;
-  text-align: center;
-  font-size: 13px;
-  color: var(--dim);
-}
-
-/* ---- navigation, written once in nav.html ---- */
-
-.site-nav {
+.card__tab {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .5rem 1.75rem;
-  padding: 1.1rem 1.5rem;
-  border-bottom: 1px solid var(--line);
-  font-size: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem .9rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line-2);
 }
 
-.site-nav a {
+.card__label {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: .12em;
+  text-transform: uppercase;
   color: var(--dim);
-  text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 2px solid transparent;
 }
 
-.site-nav a:hover { color: var(--ink); }
-
-.site-nav .brand {
-  color: var(--ink);
-  font-weight: 600;
+.card__no {
+  font: 400 11px/1 var(--serif);
+  color: var(--dim);
+  font-variant-numeric: oldstyle-nums;
 }
 
-/* The page you are on: coloured, and underlined, so that the nav says
-   where you are without you having to read the address bar. */
-.site-nav a[aria-current="page"] {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+.card__body {
+  padding: 1rem .9rem 1.15rem;
+  max-width: var(--w-read);
 }
 
-.site-nav a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+.card h2 {
+  margin: 0 0 .4rem;
+  font: 400 30px/1.25 var(--serif);
 }
 
-/* ---- quotation of the visit ---- */
+.card h2 a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.card h2 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card__body p {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--dim);
+}
+
+.card:hover, .card:focus-within { border-color: var(--ink); }
+.card:hover .card__tab, .card:focus-within .card__tab { background: var(--accent-wash); }
+
+/* ---- quotation of the visit ------------------------------------------
+   A left rule in ink, not in orange: you cannot click it. */
 
 .hero-quote {
   margin: 2.5rem 0 0;
   padding: 1.4rem 1.6rem;
-  max-width: 34rem;
-  text-align: left;
-  border-left: 3px solid var(--accent);
-  background: var(--wash);
+  max-width: var(--w-read);
+  background: var(--surface);
+  border-left: 3px solid var(--ink);
 }
 
-.hero-quote .eyebrow {
+.eyebrow {
   margin: 0 0 .6rem;
   font-size: 12px;
-  letter-spacing: .08em;
+  line-height: 1.35;
+  letter-spacing: .10em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
 .hero-quote blockquote {
   margin: 0;
-  font: 400 24px/1.4 Georgia, "Times New Roman", serif;
+  font: 400 24px/1.4 var(--serif);
 }
 
 .hero-quote cite {
   display: block;
   margin-top: .55rem;
+  font: 400 12px/1.35 var(--sans);
   font-style: normal;
-  font-size: 14px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
   color: var(--dim);
 }
 
-/* ---- the fifteen ---- */
+/* ---- the fifteen ------------------------------------------------------
+   The number hangs in its own rail, so the measure of the quotation
+   itself stays exactly --w-read. It is printed in the markup and hidden
+   from the screen reader: the <ol> already says "item 4", and hearing
+   "04" as well is one number too many. */
 
 .quotes {
-  width: 100%;
-  max-width: 34rem;
   margin: 3rem 0 0;
   padding: 0;
+  width: 100%;
+  max-width: calc(2.5rem + var(--w-read));
   list-style: none;
-  text-align: left;
   border-top: 1px solid var(--line);
+  border-bottom: 2px solid var(--ink);
 }
 
 .quotes li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, var(--w-read));
+  gap: 0;
+  width: 100%;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--line);
 }
 
+.quotes li:last-child { border-bottom: 0; }
+
+.quotes li > * { grid-column: 2; }
+
+/* Written into the markup, hidden from the screen reader: the <ol> already
+   says "item 4", and saying "04" as well is one number too many. */
+.quote-no {
+  grid-column: 1;
+  grid-row: 1;
+  font: 400 15px/1.55 var(--serif);
+  color: var(--dim);
+  font-variant-numeric: oldstyle-nums;
+}
+
 .quotes blockquote {
   margin: 0;
-  font: 400 20px/1.55 Georgia, "Times New Roman", serif;
+  font: 400 20px/1.45 var(--serif);
 }
 
 .quotes cite {
   display: block;
   margin-top: .5rem;
+  font: 400 12px/1.35 var(--sans);
   font-style: normal;
-  font-size: 14px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
   color: var(--dim);
 }
 
-/* ---- the ideas list ---- */
+.quotes cite::before,
+.hero-quote cite::before { content: "\2014  "; }
+
+/* ---- the six ideas ----------------------------------------------------
+   Number and title share a baseline; the number is ink, because you
+   cannot click it. */
 
 .ideas {
-  width: 100%;
-  max-width: 40rem;
   margin: 3rem 0 0;
   padding: 0;
+  width: 100%;
+  max-width: calc(2.75rem + var(--w-read));
   list-style: none;
-  text-align: left;
+  border-bottom: 2px solid var(--ink);
 }
 
 .idea {
   display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: 0 1rem;
-  padding: 1.7rem 0;
+  grid-template-columns: 2.75rem minmax(0, var(--w-read));
+  align-items: baseline;      /* the number sits on the title's baseline */
+  gap: 0;
+  width: 100%;
+  padding: 1.5rem 0;
   border-top: 1px solid var(--line);
 }
 
-.idea:last-child { border-bottom: 1px solid var(--line); }
-
 .idea__no {
+  grid-column: 1;
   margin: 0;
-  padding-top: .5rem;
-  font-size: 13px;
-  letter-spacing: .08em;
-  color: var(--accent);
+  font: 400 15px/1.25 var(--serif);
+  color: var(--dim);
+  font-variant-numeric: oldstyle-nums;
 }
 
 .idea h2 {
   grid-column: 2;
   margin: 0 0 .4rem;
-  font: 400 22px/1.3 Georgia, "Times New Roman", serif;
+  font: 400 30px/1.25 var(--serif);
 }
 
 .idea__text {
   grid-column: 2;
   margin: 0;
-  font-size: 17px;
+  max-width: 60ch;
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--dim);
 }
 
 .idea__state {
   grid-column: 2;
-  margin: .7rem 0 0;
+  margin: .75rem 0 0;
   font-size: 11px;
-  letter-spacing: .1em;
+  line-height: 1.3;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: #a39d92;
 }
 
-/* ---- the index cards on the home page ---- */
+.idea__state-key { color: var(--dim); }
+.idea__state-value { color: var(--ink); }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 1rem;
-  width: 100%;
-  max-width: 40rem;
-  margin: 3.5rem 0 0;
-  padding: 0;
-  list-style: none;
-  text-align: left;
+/* The two ideas that stopped, struck through: the joke lands without
+   spending a colour on it. */
+.idea__state-value.is-struck { text-decoration: line-through; }
+
+/* ---- the index at the foot of every page ------------------------------
+   Linear, not a ring: the home page has nothing before it, and the last
+   page has nothing after it. */
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem 1rem;
+  padding-block: 1rem 2rem;
+  border-top: 2px solid var(--ink);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--dim);
 }
 
-.card {
-  display: block;
-  height: 100%;
-  padding: 1.25rem 1.4rem;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  color: inherit;
+.pager a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--accent);
   text-decoration: none;
-  transition: border-color .2s ease, transform .2s ease;
 }
 
-.card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-}
+.pager a:hover { text-decoration: underline; }
 
-.card:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
+.pager .next { margin-left: auto; }
 
-.card .card__label {
-  margin: 0 0 .5rem;
-  font-size: 11px;
-  letter-spacing: .09em;
+footer {
+  padding-block: 1rem 2.5rem;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: .10em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
-.card h2 {
-  margin: 0 0 .35rem;
-  font: 400 21px/1.3 Georgia, "Times New Roman", serif;
+footer p { margin: 0; }
+
+/* ---- what the page says when nav.html cannot be fetched --------------- */
+
+.nav-fallback {
+  padding-block: 1.1rem;
+  font: 600 16px/1.4 var(--serif);
 }
 
-.card p {
-  margin: 0;
-  font-size: 15px;
-  color: var(--dim);
+.nav-fallback p { margin: 0; }
+
+.nav-fallback a {
+  color: var(--ink);
+  text-decoration: none;
 }
 
-/* The behaviour stays; only the movement goes. */
+/* ---- one focus ring, everywhere -------------------------------------- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible + .switch__label .switch__track {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- less movement, not no feedback ----------------------------------
+   Deliberately not `* { transition: none }`: the machine's hand would
+   then teleport instead of arriving. Its own sheet keeps a short fade. */
+
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
+
+  .card, .card__tab, .machine__status,
+  .box__lid, .switch__knob, .switch__track { transition: none !important; }
+}
+
+/* ---- a phone needs the labels a little larger ------------------------ */
+
+@media (max-width: 480px) {
+  /* A hanging number needs a column, and a phone has no column to spare:
+     the number moves above the text, and both start at the same edge.
+     The grid-column resets matter — without them every child still asks
+     for column 2, which creates an empty first column and pushes the
+     text 36px to the right of the number. */
+  .idea, .quotes li { grid-template-columns: 1fr; }
+  .idea > *,
+  .idea h2,
+  .idea__text,
+  .idea__state,
+  .quotes li > * { grid-column: 1; }
+  .idea__no, .quote-no { margin-bottom: 6px; }
+
+  /* One rung down from the desktop body size, still above the 15px floor. */
+  .tagline,
+  .idea__text,
+  .quotes blockquote,
+  .hero-quote blockquote,
+  .machine__sentence { font-size: 16px; }
+
+  .card__label,
+  .card__no,
+  .idea__state,
+  .hero figcaption,
+  .eyebrow,
+  .quotes cite,
+  .hero-quote cite,
+  .site-nav a,
+  .pager a,
+  footer {
+    font-size: 12px;
+  }
+
+  .note { font-size: 15px; }
+  .idea__state { letter-spacing: .12em; }
 }

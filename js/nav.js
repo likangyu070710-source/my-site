@@ -5,9 +5,9 @@
    The index at the foot of each page is built from the same list, so
    there is still only one place to edit.
 
-   fetch() needs http://, so opening the file directly will leave the page
-   without a nav. The page still reads — the nav is an addition, not a
-   requirement for the content. */
+   fetch() needs http://, so opening the file directly leaves the nav
+   placeholder alone — and the placeholder now carries one link home, so a
+   visitor who lands on machine.html from the file system is not stranded. */
 
 fetch('nav.html')
   .then(function (response) {
@@ -28,7 +28,7 @@ fetch('nav.html')
     }
   })
   .catch(function () {
-    /* Left out on purpose: no nav is better than a broken page. */
+    /* Left out on purpose: the fallback link is better than a broken page. */
   });
 
 /* The name of the file the visitor is looking at. On the home page the
@@ -39,22 +39,23 @@ function currentPage() {
 
 /* The link pointing at the page you are already on gets aria-current,
    so a screen reader announces it instead of leaving you to guess.
-   The site name is left alone: it is a label, not one of the links. */
+   The site name is included: on the home page it is the only thing that
+   can say where you are. */
 function markCurrentPage(nav) {
   var here = currentPage();
 
-  nav.querySelectorAll('a:not(.brand)').forEach(function (link) {
-    var target = link.getAttribute('href');
-
-    if (target === here) {
+  nav.querySelectorAll('a').forEach(function (link) {
+    if (link.getAttribute('href') === here) {
       link.setAttribute('aria-current', 'page');
     }
   });
 }
 
 /* The index at the foot of the page: one step back, one step on, taken
-   from the same links the nav uses. The home page is not a nav link —
-   it is the site name — so it is added here, once, to close the ring. */
+   from the same links the nav uses. Linear, not circular — the home page
+   has nothing before it, and the last page has nothing after it. A ring
+   would have printed "← Ideas" at the top of the site, which is a link
+   to the end of it. */
 function buildPager(nav) {
   var slot = document.querySelector('[data-pager]');
   if (!slot) { return; }
@@ -72,22 +73,38 @@ function buildPager(nav) {
     if (pages[i].href === here) { index = i; }
   }
 
-  if (index === -1) { return; }   /* this page is not part of the ring */
-
-  var previous = pages[(index - 1 + pages.length) % pages.length];
-  var next = pages[(index + 1) % pages.length];
+  if (index === -1) { return; }   /* this page is not in the list */
 
   slot.className = 'pager';
-  slot.appendChild(pagerLink(previous, 'prev', '\u2190 ' + previous.label));
-  slot.appendChild(pagerLink(next, 'next', next.label + ' \u2192'));
+
+  if (index > 0) {
+    slot.appendChild(pagerLink(pages[index - 1], 'prev', '\u2190', true));
+  }
+
+  if (index < pages.length - 1) {
+    slot.appendChild(pagerLink(pages[index + 1], 'next', '\u2192', false));
+  }
 }
 
-function pagerLink(page, className, text) {
+/* The arrow is a drawing, not a word, so it goes inside an aria-hidden
+   span and the link is announced as "Ideas", not "Ideas rightwards arrow". */
+function pagerLink(page, className, arrow, arrowFirst) {
   var link = document.createElement('a');
+  var mark = document.createElement('span');
 
   link.href = page.href;
   link.className = className;
-  link.textContent = text;
+
+  mark.setAttribute('aria-hidden', 'true');
+  mark.textContent = arrow;
+
+  if (arrowFirst) {
+    link.appendChild(mark);
+    link.appendChild(document.createTextNode(' ' + page.label));
+  } else {
+    link.appendChild(document.createTextNode(page.label + ' '));
+    link.appendChild(mark);
+  }
 
   return link;
 }

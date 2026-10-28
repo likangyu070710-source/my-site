@@ -1,36 +1,59 @@
-/* machine.css — only for machine.html. The shared look is in style.css. */
+/* machine.css — only machine.html loads this.
+   The shared look lives in style.css; this is the box, the switch,
+   the hand, and the reading strip under it. */
 
 .machine {
-  width: 100%;
-  max-width: 34rem;
-  margin: 1rem 0 0;
+  /* The width the box will actually be: --w-read, or the page width
+     inside the gutters, whichever is smaller. The hand's resting place
+     is measured from it (see .hand below). */
+  --pool: min(var(--w-read), calc(100vw - 2 * var(--rail)));
+
+  max-width: var(--w-read);
+  margin: 2.5rem 0 0;
 }
 
-/* ---- the box ---- */
+/* ---- the box ---------------------------------------------------------
+   Two pixels of ink and a hard offset shadow: no blur, no colour, so the
+   box reads as a plate on a shelf rather than a floating panel. */
 
 .box {
   position: relative;
   height: 160px;
   border: 2px solid var(--ink);
-  border-radius: 4px;
-  background: var(--wash);
+  border-radius: 2px;
+  background: var(--surface);
   overflow: hidden;
+  box-shadow: 5px 5px 0 rgba(31, 32, 35, .06);
 }
 
-/* A small plate in the corner, because a box with nothing written on it
-   looks unfinished rather than empty. */
+/* A ruler along the bottom edge — the only ornament on the box, and it
+   is a line, so it costs nothing. */
+.box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  border-top: 1px solid var(--line-2);
+  background: repeating-linear-gradient(90deg, var(--line-2) 0 1px, transparent 1px 12px);
+}
+
+/* The plate in the corner. Ink at --dim, not at the old #B8B3A8, which
+   was 1.87:1 and unreadable. 11px, the smallest step of the type scale —
+   the spec's own 10px was the one size with no rung on that ladder. */
 .box::after {
   content: "UW \00B7  01";
   position: absolute;
-  right: 1rem;
-  bottom: .8rem;
-  font-size: 11px;
-  letter-spacing: .12em;
-  color: #b8b3a8;
+  right: .9rem;
+  bottom: .85rem;
+  font: 400 11px/1 var(--mono);
+  letter-spacing: .16em;
+  color: var(--dim);
 }
 
 /* The lid is a thick line along the top edge. When the machine wakes up
-   it lifts and tilts — the only part of the box that can show surprise. */
+   it lifts and tilts — the only part of the box that shows surprise. */
 .box__lid {
   position: absolute;
   left: 0;
@@ -47,7 +70,7 @@
   opacity: .35;
 }
 
-/* ---- the one control ---- */
+/* ---- the switch ------------------------------------------------------ */
 
 .switch {
   position: absolute;
@@ -57,8 +80,7 @@
 }
 
 /* Hidden from the eye, still reachable with Tab and still announced.
-   The usual four lines: it must not be display:none, or the keyboard
-   and the screen reader would lose the control entirely. */
+   It must not be display:none, or keyboard and screen reader lose it. */
 .switch__input {
   position: absolute;
   width: 1px;
@@ -70,10 +92,14 @@
   clip-path: inset(50%);
 }
 
+/* 34px of track, but a 48px tall target: the label is what the pointer
+   and the thumb actually hit. */
 .switch__label {
   display: flex;
   align-items: center;
   gap: .8rem;
+  min-height: 44px;
+  padding-block: 7px;
   cursor: pointer;
 }
 
@@ -84,7 +110,7 @@
   height: 34px;
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: #fff;
+  background: var(--paper);          /* never pure white */
   transition: background-color .2s ease, border-color .2s ease;
 }
 
@@ -100,7 +126,7 @@
 }
 
 .switch__input:checked + .switch__label .switch__track {
-  background: #fbe3d2;
+  background: var(--accent-wash);
   border-color: var(--accent);
 }
 
@@ -109,28 +135,48 @@
   background: var(--accent);
 }
 
-/* The focus ring is drawn on the track, because the input itself is one
+/* The ring is drawn on the track, because the input itself is one
    clipped pixel and a ring around it would never be seen. */
 .switch__input:focus-visible + .switch__label .switch__track {
-  outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
 
+/* On/Off is driven by the checkbox, so it is right with JavaScript off
+   and it is never part of the control's accessible name. */
 .switch__word {
-  min-width: 2.4rem;
-  font-size: 17px;
+  min-width: 2.6rem;
+  font: 400 12px/1 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
   color: var(--dim);
 }
 
-/* ---- the hand ---- */
+.switch__on { display: none; }
+
+.switch__input:checked + .switch__label .switch__on { display: inline; }
+.switch__input:checked + .switch__label .switch__off { display: none; }
+
+/* ---- the hand --------------------------------------------------------
+   Decorative: it never takes a click, so a press during the surprise is
+   never swallowed by the drawing on top of the switch.
+
+   Parked, the fingers stay just inside the right edge — the same sliver
+   the old fixed `translate(420px)` produced at full width. Because the
+   box is narrower on a phone (335px at 375px), that offset has to be
+   measured from the box, not written down as a constant; a constant left
+   the whole hand sitting in the middle of a small box. */
 
 .hand {
+  --hand-w: 140px;
+  --peek: 0px;
+
   position: absolute;
-  left: 3.4rem;
+  left: 6.3rem;
   top: 50%;
-  width: 140px;
+  width: var(--hand-w);
   fill: var(--accent);
-  transform: translate(420px, -50%);   /* parked outside the box, to the right */
+  pointer-events: none;
+  transform: translate(calc(var(--pool) - 6.3rem + var(--peek)), -50%);
   transition: transform .6s cubic-bezier(.34, .1, .2, 1);
 }
 
@@ -144,13 +190,18 @@
   transition-duration: .16s;
 }
 
-/* ---- what the machine says while it works ---- */
+/* ---- the reading strip ------------------------------------------------
+   The one place on the site that is monospaced: it behaves like an
+   instrument, not like prose. */
 
 .machine__status {
-  min-height: 1.7em;
-  margin: 1.4rem 0 0;
-  font-size: 18px;
-  color: var(--dim);
+  margin: 1rem 0 0;
+  padding: 10px 14px;
+  min-height: 2.2em;
+  background: var(--surface);
+  border-left: 2px solid var(--ink);
+  font: 13px/1.5 var(--mono);
+  color: var(--ink);
   opacity: 0;
   transition: opacity .25s ease;
 }
@@ -158,18 +209,44 @@
 .machine__status.show { opacity: 1; }
 
 .machine__sentence {
-  margin: 2.5rem 0 0;
-  max-width: 32rem;
-  font-size: 17px;
+  margin: 2rem 0 0;
+  max-width: var(--w-narrow);
+  font-size: 18px;
   color: var(--dim);
 }
 
-/* On a phone the box is narrower, so the switch and the hand move in. */
-@media (max-width: 420px) {
+/* ---- less movement, still legible ------------------------------------
+   The hand does not travel — it is simply there, fading in over 120ms.
+   The position has to be moved as well as the opacity: left only fading,
+   the visitor would see a sliver of the arm at the right edge light up
+   while the switch went dark, which tells no story at all. The jump
+   happens on the frame where the hand is still at opacity 0, so it is
+   never seen. */
+
+@media (prefers-reduced-motion: reduce) {
+  .hand { opacity: 0; transition: opacity .12s linear !important; }
+  .box.is-reaching .hand {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+  /* no 10px shove either, or the hand would hop once more at the end */
+  .box.is-flipping .hand { transform: translate(0, -50%); }
+}
+
+/* ---- narrower box, so the fittings move in --------------------------- */
+
+@media (max-width: 899px) {
+  .hand { --hand-w: 128px; }
+}
+
+@media (max-width: 480px) {
   .box { height: 140px; }
   .switch { left: 1.3rem; }
   .switch__track { width: 58px; height: 30px; }
   .switch__knob { width: 20px; height: 20px; }
   .switch__input:checked + .switch__label .switch__knob { transform: translateX(28px); }
-  .hand { left: 1.9rem; width: 118px; }
+  .hand { --hand-w: 104px; left: 4.6rem; }
+  /* 13px of monospace is too small to read at arm's length on a phone;
+     the type scale puts a floor of 15px under the reading strip. */
+  .machine__status { font-size: 15px; }
 }

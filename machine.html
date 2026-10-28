@@ -10,22 +10,29 @@
 </head>
 <body>
 
-<div data-nav></div>
+<div data-nav><p class="nav-fallback"><a href="index.html">The Useless Wiki</a></p></div>
 
 <main class="page">
   <h1>The Patient Hand</h1>
   <p class="tagline">One switch. It turns itself off — and then it waits.</p>
 
-  <section class="machine" aria-labelledby="machine-caption">
+  <!-- The region is named for what it is. It used to take its name from the
+       slogan underneath, which made a screen reader read the joke as a
+       heading every time you entered the section. -->
+  <section class="machine" aria-label="The machine">
 
     <div class="box" data-box>
       <div class="box__lid" aria-hidden="true"></div>
 
       <div class="switch">
         <input type="checkbox" id="power" class="switch__input">
+        <!-- The name of the control is "Power" and never changes. On and Off
+             are decoration: the browser announces the checked state itself,
+             so they are hidden from the screen reader and driven by CSS. -->
         <label for="power" class="switch__label">
           <span class="switch__track"><span class="switch__knob"></span></span>
-          <span class="switch__word" data-word>Off</span>
+          <span class="switch__word" aria-hidden="true"><span class="switch__off">Off</span><span class="switch__on">On</span></span>
+          <span class="sr-only">Power</span>
         </label>
       </div>
 
@@ -33,18 +40,18 @@
            and it cannot go missing. It is decoration, so it is hidden from
            screen readers; the switch is the control they use. -->
       <svg class="hand" viewBox="0 0 140 60" aria-hidden="true">
-        <rect x="46" y="21" width="94" height="18" rx="9"/>
-        <circle cx="40" cy="30" r="17"/>
-        <rect x="8" y="14" width="30" height="11" rx="5.5"/>
-        <rect x="2" y="26" width="34" height="11" rx="5.5"/>
-        <rect x="10" y="38" width="26" height="10" rx="5"/>
+        <rect x="62" y="24" width="78" height="13" rx="6.5"/>
+        <rect x="34" y="16" width="32" height="28" rx="13"/>
+        <rect x="2" y="18" width="36" height="8" rx="4"/>
+        <rect x="7" y="29" width="31" height="8" rx="4"/>
+        <rect x="42" y="5" width="11" height="13" rx="5.5"/>
       </svg>
     </div>
 
-    <p class="machine__status" data-status role="status" aria-live="polite"></p>
+    <p class="machine__status" data-status role="status" aria-atomic="true"></p>
   </section>
 
-  <p class="machine__sentence" id="machine-caption">
+  <p class="machine__sentence">
     What it says: <em>you will switch it on again, and it knows this.</em>
   </p>
 

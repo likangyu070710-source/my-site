@@ -17,9 +17,8 @@
   var box = document.querySelector('[data-box]');
   var power = document.getElementById('power');
   var status = document.querySelector('[data-status]');
-  var word = document.querySelector('[data-word]');
 
-  if (!box || !power || !status || !word) { return; }
+  if (!box || !power || !status) { return; }
 
   var count = 0;      /* how many times it has switched itself off */
   var timers = [];    /* every pending timeout, so none outlives a reset */
@@ -45,22 +44,21 @@
     }, 2800);
   }
 
-  function setWord(isOn) {
-    word.textContent = isOn ? 'On' : 'Off';
-  }
-
   /* The hand is slower every time it is asked to do this — 380 ms at
      first, just under a second by the eighth press. */
   function reachTime() {
     return 380 + Math.min(count, 7) * 95;
   }
 
+  /* Every line is different from the one before it. A live region does
+     not re-read a sentence that has not changed, so the repeat lines
+     carry their count: pressing six times says six things. */
   function lineFor(n) {
     if (n === 1) { return 'It switched itself off.'; }
     if (n === 2) { return 'It switched itself off again.'; }
     if (n === 3) { return 'Why did you switch it on again?'; }
     if (n === 7) { return 'The hand is not enjoying this.'; }
-    return 'It switched itself off. As before.';
+    return 'It switched itself off. As before. \u00B7 ' + n;
   }
 
   /* ---- sound: two short tones, made by the browser, no files ---- */
@@ -97,6 +95,9 @@
     clearAll();
     box.classList.remove('is-open', 'is-reaching', 'is-flipping');
     status.classList.remove('show');
+    /* Emptied, not just hidden: two identical lines in a row are one
+       announcement, and a visitor pressing quickly would hear silence. */
+    status.textContent = '';
   }
 
   function switchItselfOff(delay) {
@@ -107,7 +108,6 @@
     later(function () {
       box.classList.add('is-flipping');
       power.checked = false;   /* the hand does this, not the visitor */
-      setWord(false);
       tone('off');
     }, 150 + delay);
 
@@ -125,7 +125,6 @@
     /* Switched off by the visitor: nothing to do, back to waiting. */
     if (!power.checked) {
       reset();
-      setWord(false);
       return;
     }
 
@@ -133,7 +132,6 @@
     reset();
 
     count += 1;
-    setWord(true);
     box.classList.add('is-open');
     tone('on');
 
@@ -144,7 +142,6 @@
 
       later(function () {
         power.checked = false;
-        setWord(false);
         box.classList.remove('is-open');
         tone('off');
         say('It switched itself off, eventually.');
@@ -159,7 +156,4 @@
       say(lineFor(count));
     }, 150 + reachTime() + 200);
   });
-
-  /* A page that has just loaded is waiting, whatever the browser restored. */
-  setWord(false);
 })();
