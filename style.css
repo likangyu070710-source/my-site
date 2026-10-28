@@ -393,7 +393,7 @@ h1 {
 .idea__text {
   grid-column: 2;
   margin: 0;
-  max-width: 60ch;
+  max-width: var(--w-read);
   font-size: 15px;
   line-height: 1.55;
   color: var(--dim);
@@ -532,4 +532,10 @@ input:focus-visible + .switch__label .switch__track {
 
   .note { font-size: 15px; }
   .idea__state { letter-spacing: .12em; }
+
+  /* The site name takes a line of its own, so the three pages wrap as one
+     group. Left to itself the row breaks in the middle and scatters the
+     last two links to opposite edges. */
+  .site-nav { justify-content: flex-start; }
+  .site-nav .brand { flex: 0 0 100%; margin-right: 0; }
 }

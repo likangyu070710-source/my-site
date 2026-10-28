@@ -160,23 +160,25 @@
    Decorative: it never takes a click, so a press during the surprise is
    never swallowed by the drawing on top of the switch.
 
-   Parked, the fingers stay just inside the right edge — the same sliver
-   the old fixed `translate(420px)` produced at full width. Because the
-   box is narrower on a phone (335px at 375px), that offset has to be
-   measured from the box, not written down as a constant; a constant left
-   the whole hand sitting in the middle of a small box. */
+   Parked, it waits exactly at the box's right edge, so nothing of it shows
+   until it comes out. That position is measured from --pool — the box's
+   real width — because the box is 335px on a phone and 544px on a desk.
+   A fixed offset cannot serve both: written as a constant it left the whole
+   hand sitting in the middle of a small box. --hand-x is the one number
+   that has to be shared by `left` and the travel, so it lives in a var. */
 
 .hand {
   --hand-w: 140px;
-  --peek: 0px;
+  --hand-x: 6.3rem;
+  --peek: 0px;        /* how much of the hand stays inside the box at rest */
 
   position: absolute;
-  left: 6.3rem;
+  left: var(--hand-x);
   top: 50%;
   width: var(--hand-w);
   fill: var(--accent);
   pointer-events: none;
-  transform: translate(calc(var(--pool) - 6.3rem + var(--peek)), -50%);
+  transform: translate(calc(var(--pool) - var(--hand-x) + var(--peek)), -50%);
   transition: transform .6s cubic-bezier(.34, .1, .2, 1);
 }
 
@@ -197,10 +199,10 @@
 .machine__status {
   margin: 1rem 0 0;
   padding: 10px 14px;
-  min-height: 2.2em;
+  min-height: calc(3em + 20px);
   background: var(--surface);
   border-left: 2px solid var(--ink);
-  font: 13px/1.5 var(--mono);
+  font: 15px/1.5 var(--mono);
   color: var(--ink);
   opacity: 0;
   transition: opacity .25s ease;
@@ -245,5 +247,5 @@
   .switch__track { width: 58px; height: 30px; }
   .switch__knob { width: 20px; height: 20px; }
   .switch__input:checked + .switch__label .switch__knob { transform: translateX(28px); }
-  .hand { --hand-w: 104px; left: 4.6rem; }
+  .hand { --hand-w: 104px; --hand-x: 4.6rem; }
 }

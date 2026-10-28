@@ -1,31 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300"
      role="img" aria-labelledby="heroTitle heroDesc">
-  <title id="heroTitle">A box seen from the side, lid open, with a hand reaching for the switch</title>
-  <desc id="heroDesc">A line drawing in section: an open box, a switch on its front face,
-  and an arm reaching in from the right to turn that switch off.</desc>
+  <title id="heroTitle">A box seen from the side, with a hand reaching in to switch it off</title>
+  <desc id="heroDesc">A line drawing in section: a closed box with a switch on its front face,
+  and an arm entering from the right edge of the picture to turn that switch off.</desc>
 
   <rect width="1200" height="300" fill="#F4F2EC"/>
 
   <!-- the box, seen from the side -->
   <rect x="330" y="112" width="540" height="152" rx="2" fill="#FBFAF7" stroke="#1F2023" stroke-width="4"/>
 
-  <!-- the lid, standing open -->
-  <g stroke="#1F2023" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <line x1="326" y1="112" x2="290" y2="34"/>
-    <line x1="874" y1="112" x2="910" y2="34"/>
-    <line x1="290" y1="34" x2="910" y2="34"/>
-  </g>
+  <!-- the lid, closed: one heavy seam along the top edge. The hand comes in
+       from the side, so an open lid would tell a second, contradictory story:
+       things do not leave this box from above. -->
+  <line x1="334" y1="112" x2="866" y2="112" stroke="#1F2023" stroke-width="9" stroke-linecap="round"/>
 
   <!-- the switch on the front face -->
   <rect x="376" y="176" width="104" height="34" rx="17" fill="#FBFAF7" stroke="#1F2023" stroke-width="4"/>
   <circle cx="452" cy="193" r="11" fill="#1F2023"/>
 
-  <!-- the hand: one arm, one palm, one finger — three shapes that still
-       read as a hand when the drawing is shown at half this size -->
+  <!-- the arm: it runs off the right edge of the picture, so it reads as coming
+       from outside the frame rather than as a capsule resting inside it -->
   <g fill="#C2410C">
-    <rect x="700" y="164" width="220" height="40" rx="20"/>
-    <circle cx="690" cy="184" r="30"/>
-    <rect x="470" y="170" width="230" height="26" rx="13"/>
+    <rect x="700" y="164" width="500" height="40" rx="20"/>
+    <circle cx="690" cy="184" r="28"/>
+    <rect x="476" y="172" width="224" height="24" rx="12"/>
   </g>
 
   <!-- the plate in the corner -->
