@@ -26,6 +26,7 @@
     <rect x="700" y="128" width="500" height="40" rx="20"/>
     <circle cx="690" cy="148" r="28"/>
     <rect x="476" y="136" width="224" height="24" rx="12"/>
+    <rect x="664" y="128" width="42" height="80" rx="21"/>
   </g>
 
   <!-- the plate in the corner -->
