@@ -52,7 +52,14 @@
 
   /* Every line is different from the one before it. A live region does
      not re-read a sentence that has not changed, so the repeat lines
-     carry their count: pressing six times says six things. */
+     carry their count: pressing six times says six things.
+
+     Keep every line under 56 characters. The strip below the box is
+     exactly two lines tall — calc(3em + 20px) at 15px/1.5 on a 320px
+     screen — so a longer sentence makes it three lines and pushes the
+     rest of the page down. Nothing in the stylesheet would catch that,
+     because the stylesheet has not changed. The longest line here is 42,
+     which leaves fourteen characters of room. */
   function lineFor(n) {
     if (n === 1) { return 'It switched itself off.'; }
     if (n === 2) { return 'It switched itself off again.'; }
