@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Patient Hand · The Useless Wiki</title>
+<meta name="description" content="A machine with one switch. It turns itself off, and waits for you to try again.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="machine.css">
+</head>
+<body>
+
+<div data-nav></div>
+
+<main class="page">
+  <h1>The Patient Hand</h1>
+  <p class="tagline">One switch. It turns itself off — and then it waits.</p>
+
+  <section class="machine" aria-labelledby="machine-caption">
+
+    <div class="box" data-box>
+      <div class="box__lid" aria-hidden="true"></div>
+
+      <div class="switch">
+        <input type="checkbox" id="power" class="switch__input">
+        <label for="power" class="switch__label">
+          <span class="switch__track"><span class="switch__knob"></span></span>
+          <span class="switch__word" data-word>Off</span>
+        </label>
+      </div>
+
+      <!-- The hand is drawn, not photographed: it scales, it weighs nothing,
+           and it cannot go missing. It is decoration, so it is hidden from
+           screen readers; the switch is the control they use. -->
+      <svg class="hand" viewBox="0 0 140 60" aria-hidden="true">
+        <rect x="46" y="21" width="94" height="18" rx="9"/>
+        <circle cx="40" cy="30" r="17"/>
+        <rect x="8" y="14" width="30" height="11" rx="5.5"/>
+        <rect x="2" y="26" width="34" height="11" rx="5.5"/>
+        <rect x="10" y="38" width="26" height="10" rx="5"/>
+      </svg>
+    </div>
+
+    <p class="machine__status" data-status role="status" aria-live="polite"></p>
+  </section>
+
+  <p class="machine__sentence" id="machine-caption">
+    What it says: <em>you will switch it on again, and it knows this.</em>
+  </p>
+
+  <p class="note">
+    Built with AI, explained by me. One control, one surprise, and it always
+    comes back to the start — click it as fast as you like.
+  </p>
+</main>
+
+<div data-pager></div>
+
+<footer>
+  <p>The Useless Wiki · Web Technologies 2026</p>
+</footer>
+
+<script src="js/nav.js"></script>
+<script src="machine.js"></script>
+
+</body>
+</html>

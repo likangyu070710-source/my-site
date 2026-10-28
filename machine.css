@@ -1,0 +1,175 @@
+/* machine.css — only for machine.html. The shared look is in style.css. */
+
+.machine {
+  width: 100%;
+  max-width: 34rem;
+  margin: 1rem 0 0;
+}
+
+/* ---- the box ---- */
+
+.box {
+  position: relative;
+  height: 160px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  background: var(--wash);
+  overflow: hidden;
+}
+
+/* A small plate in the corner, because a box with nothing written on it
+   looks unfinished rather than empty. */
+.box::after {
+  content: "UW \00B7  01";
+  position: absolute;
+  right: 1rem;
+  bottom: .8rem;
+  font-size: 11px;
+  letter-spacing: .12em;
+  color: #b8b3a8;
+}
+
+/* The lid is a thick line along the top edge. When the machine wakes up
+   it lifts and tilts — the only part of the box that can show surprise. */
+.box__lid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 10px;
+  background: var(--ink);
+  transform-origin: left center;
+  transition: transform .45s cubic-bezier(.34, .1, .2, 1), opacity .45s ease;
+}
+
+.box.is-open .box__lid {
+  transform: translateY(-14px) rotate(-6deg);
+  opacity: .35;
+}
+
+/* ---- the one control ---- */
+
+.switch {
+  position: absolute;
+  left: 2.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Hidden from the eye, still reachable with Tab and still announced.
+   The usual four lines: it must not be display:none, or the keyboard
+   and the screen reader would lose the control entirely. */
+.switch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.switch__label {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  cursor: pointer;
+}
+
+.switch__track {
+  position: relative;
+  display: block;
+  width: 68px;
+  height: 34px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: #fff;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+
+.switch__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform .25s ease, background-color .2s ease;
+}
+
+.switch__input:checked + .switch__label .switch__track {
+  background: #fbe3d2;
+  border-color: var(--accent);
+}
+
+.switch__input:checked + .switch__label .switch__knob {
+  transform: translateX(34px);
+  background: var(--accent);
+}
+
+/* The focus ring is drawn on the track, because the input itself is one
+   clipped pixel and a ring around it would never be seen. */
+.switch__input:focus-visible + .switch__label .switch__track {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.switch__word {
+  min-width: 2.4rem;
+  font-size: 17px;
+  color: var(--dim);
+}
+
+/* ---- the hand ---- */
+
+.hand {
+  position: absolute;
+  left: 3.4rem;
+  top: 50%;
+  width: 140px;
+  fill: var(--accent);
+  transform: translate(420px, -50%);   /* parked outside the box, to the right */
+  transition: transform .6s cubic-bezier(.34, .1, .2, 1);
+}
+
+.box.is-reaching .hand {
+  transform: translate(0, -50%);
+}
+
+/* The shove: a short move to the right, at the moment the switch clicks off. */
+.box.is-flipping .hand {
+  transform: translate(10px, -50%) scale(.96);
+  transition-duration: .16s;
+}
+
+/* ---- what the machine says while it works ---- */
+
+.machine__status {
+  min-height: 1.7em;
+  margin: 1.4rem 0 0;
+  font-size: 18px;
+  color: var(--dim);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.machine__status.show { opacity: 1; }
+
+.machine__sentence {
+  margin: 2.5rem 0 0;
+  max-width: 32rem;
+  font-size: 17px;
+  color: var(--dim);
+}
+
+/* On a phone the box is narrower, so the switch and the hand move in. */
+@media (max-width: 420px) {
+  .box { height: 140px; }
+  .switch { left: 1.3rem; }
+  .switch__track { width: 58px; height: 30px; }
+  .switch__knob { width: 20px; height: 20px; }
+  .switch__input:checked + .switch__label .switch__knob { transform: translateX(28px); }
+  .hand { left: 1.9rem; width: 118px; }
+}
