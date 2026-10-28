@@ -246,7 +246,4 @@
   .switch__knob { width: 20px; height: 20px; }
   .switch__input:checked + .switch__label .switch__knob { transform: translateX(28px); }
   .hand { --hand-w: 104px; left: 4.6rem; }
-  /* 13px of monospace is too small to read at arm's length on a phone;
-     the type scale puts a floor of 15px under the reading strip. */
-  .machine__status { font-size: 15px; }
 }

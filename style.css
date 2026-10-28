@@ -411,9 +411,6 @@ h1 {
 .idea__state-key { color: var(--dim); }
 .idea__state-value { color: var(--ink); }
 
-/* The two ideas that stopped, struck through: the joke lands without
-   spending a colour on it. */
-.idea__state-value.is-struck { text-decoration: line-through; }
 
 /* ---- the index at the foot of every page ------------------------------
    Linear, not a ring: the home page has nothing before it, and the last
