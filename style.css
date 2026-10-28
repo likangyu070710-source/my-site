@@ -29,6 +29,14 @@ main {
   padding: 2rem 1.5rem;
 }
 
+/* The machine page is short enough to sit in the middle of the screen.
+   A page with fifteen quotations on it is not: centring it would push
+   the top half out of reach, so those pages start at the top instead. */
+main.page {
+  justify-content: flex-start;
+  padding-top: 3rem;
+}
+
 h1 {
   margin: 0;
   font: 400 34px/1.2 Georgia, "Times New Roman", serif;
@@ -86,6 +94,102 @@ footer {
   padding: 1rem 1.5rem;
   text-align: center;
   font-size: 12px;
+  color: var(--dim);
+}
+
+/* ---- navigation, written once in nav.html ---- */
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e6e3dc;
+  font-size: 14px;
+}
+
+.site-nav a {
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.site-nav a:hover { color: var(--ink); }
+
+.site-nav .brand {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* The page you are on: no link styling, because the link goes nowhere. */
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+.site-nav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- quotation of the visit ---- */
+
+.hero-quote {
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 1.5rem;
+  max-width: 34rem;
+  text-align: left;
+  border-left: 3px solid var(--accent);
+  background: #f4f2ec;
+}
+
+.hero-quote .eyebrow {
+  margin: 0 0 .5rem;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.hero-quote blockquote {
+  margin: 0;
+  font: 400 21px/1.45 Georgia, "Times New Roman", serif;
+}
+
+.hero-quote cite {
+  display: block;
+  margin-top: .5rem;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--dim);
+}
+
+/* ---- the fifteen ---- */
+
+.quotes {
+  width: 100%;
+  max-width: 34rem;
+  margin: 3rem 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  border-top: 1px solid #e6e3dc;
+}
+
+.quotes li {
+  padding: 1.4rem 0;
+  border-bottom: 1px solid #e6e3dc;
+}
+
+.quotes blockquote {
+  margin: 0;
+  font: 400 18px/1.55 Georgia, "Times New Roman", serif;
+}
+
+.quotes cite {
+  display: block;
+  margin-top: .45rem;
+  font-style: normal;
+  font-size: 13px;
   color: var(--dim);
 }
 
