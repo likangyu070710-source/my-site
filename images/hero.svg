@@ -6,6 +6,12 @@
 
   <rect width="1200" height="300" fill="#F4F2EC"/>
 
+  <!-- The machine is called The Patient Hand, but what is drawn here is a
+       metal arm. That is deliberate: the name is the conceit, the drawing is
+       what it actually is — a rod with a palm and one finger on the switch.
+       Do not "fix" one of them to match the other; the joke is that a box
+       with a metal arm has been given a name as if it were a person. -->
+
   <!-- the box, seen from the side. Everything sits 36px higher than the
        first attempt, so the drawing is centred in the frame: a closed lid
        leaves no empty headroom to explain. -->
