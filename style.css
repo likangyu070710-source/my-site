@@ -1,10 +1,13 @@
-/* The Useless Wiki — one page, one control. */
+/* The Useless Wiki — one page, one control.
+   Everything here is shared by every page of the site. */
 
 :root {
   --paper: #fbfaf7;
   --ink: #202122;
   --dim: #6b7075;
   --accent: #c2410c;
+  --line: #e6e3dc;
+  --wash: #f4f2ec;
 }
 
 * { box-sizing: border-box; }
@@ -16,7 +19,7 @@ body {
   flex-direction: column;
   background: var(--paper);
   color: var(--ink);
-  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font: 18px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 main {
@@ -39,18 +42,39 @@ main.page {
 
 h1 {
   margin: 0;
-  font: 400 34px/1.2 Georgia, "Times New Roman", serif;
+  font: 400 clamp(38px, 6.5vw, 54px)/1.12 Georgia, "Times New Roman", serif;
+  letter-spacing: -.01em;
 }
 
 .tagline {
-  margin: .5rem 0 2.5rem;
+  margin: .7rem 0 2.5rem;
+  max-width: 30rem;
+  font-size: 19px;
   color: var(--dim);
 }
 
+/* ---- home page hero ---- */
+
+.hero {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 0 2rem;
+  border: 1px solid var(--line);
+  background: var(--wash);
+}
+
+.hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---- the control ---- */
+
 .press {
-  padding: .8rem 2.2rem;
+  padding: .95rem 2.8rem;
   font: inherit;
-  font-size: 18px;
+  font-size: 21px;
   color: #fff;
   background: var(--accent);
   border: 0;
@@ -71,6 +95,7 @@ h1 {
 .status {
   margin: 2rem 0 0;
   min-height: 1.6em;
+  font-size: 19px;
   color: var(--dim);
   opacity: 0;
   transform: translateY(4px);
@@ -85,15 +110,44 @@ h1 {
 
 .note {
   margin: 2.5rem 0 0;
-  max-width: 26rem;
-  font-size: 13px;
+  max-width: 30rem;
+  font-size: 15px;
   color: var(--dim);
+}
+
+/* ---- the index at the foot of every page ---- */
+
+.pager {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+  font-size: 16px;
+}
+
+.pager a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.pager a:hover { text-decoration: underline; }
+
+.pager a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.pager .next {
+  margin-left: auto;
+  text-align: right;
 }
 
 footer {
   padding: 1rem 1.5rem;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--dim);
 }
 
@@ -103,15 +157,17 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.25rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e6e3dc;
-  font-size: 14px;
+  gap: .5rem 1.75rem;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
 }
 
 .site-nav a {
   color: var(--dim);
   text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
 }
 
 .site-nav a:hover { color: var(--ink); }
@@ -121,30 +177,32 @@ footer {
   font-weight: 600;
 }
 
-/* The page you are on: no link styling, because the link goes nowhere. */
+/* The page you are on: coloured, and underlined, so that the nav says
+   where you are without you having to read the address bar. */
 .site-nav a[aria-current="page"] {
   color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .site-nav a:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* ---- quotation of the visit ---- */
 
 .hero-quote {
   margin: 2.5rem 0 0;
-  padding: 1.25rem 1.5rem;
+  padding: 1.4rem 1.6rem;
   max-width: 34rem;
   text-align: left;
   border-left: 3px solid var(--accent);
-  background: #f4f2ec;
+  background: var(--wash);
 }
 
 .hero-quote .eyebrow {
-  margin: 0 0 .5rem;
-  font-size: 11px;
+  margin: 0 0 .6rem;
+  font-size: 12px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--dim);
@@ -152,14 +210,14 @@ footer {
 
 .hero-quote blockquote {
   margin: 0;
-  font: 400 21px/1.45 Georgia, "Times New Roman", serif;
+  font: 400 24px/1.4 Georgia, "Times New Roman", serif;
 }
 
 .hero-quote cite {
   display: block;
-  margin-top: .5rem;
+  margin-top: .55rem;
   font-style: normal;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--dim);
 }
 
@@ -172,24 +230,78 @@ footer {
   padding: 0;
   list-style: none;
   text-align: left;
-  border-top: 1px solid #e6e3dc;
+  border-top: 1px solid var(--line);
 }
 
 .quotes li {
-  padding: 1.4rem 0;
-  border-bottom: 1px solid #e6e3dc;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .quotes blockquote {
   margin: 0;
-  font: 400 18px/1.55 Georgia, "Times New Roman", serif;
+  font: 400 20px/1.55 Georgia, "Times New Roman", serif;
 }
 
 .quotes cite {
   display: block;
-  margin-top: .45rem;
+  margin-top: .5rem;
   font-style: normal;
-  font-size: 13px;
+  font-size: 14px;
+  color: var(--dim);
+}
+
+/* ---- the index cards on the home page ---- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 40rem;
+  margin: 3.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.card .card__label {
+  margin: 0 0 .5rem;
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.card h2 {
+  margin: 0 0 .35rem;
+  font: 400 21px/1.3 Georgia, "Times New Roman", serif;
+}
+
+.card p {
+  margin: 0;
+  font-size: 15px;
   color: var(--dim);
 }
 

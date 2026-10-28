@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Useless Wiki</title>
-<meta name="description" content="A machine that does nothing, on purpose.">
+<meta name="description" content="An encyclopaedia of things that do nothing, collected properly.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,23 +12,43 @@
 <!-- nav.js fills this from nav.html. See the note in that file. -->
 <div data-nav></div>
 
-<main>
+<main class="page">
   <h1>The Useless Wiki</h1>
-  <p class="tagline">A machine that does nothing, on purpose.</p>
+  <p class="tagline">An encyclopaedia of things that do nothing, collected properly.</p>
 
-  <button type="button" id="press" class="press">Press</button>
+  <figure class="hero">
+    <img src="images/hero.svg" width="1200" height="300"
+         alt="A line drawing of an open box with a switch on the front, and an arm reaching out of the lid to turn that switch off.">
+  </figure>
 
-  <p class="status" id="status" role="status" aria-live="polite"></p>
+  <ul class="cards">
+    <li>
+      <a class="card" href="machine.html">
+        <p class="card__label">The machine</p>
+        <h2>The Patient Hand</h2>
+        <p>One switch. It turns itself off, and waits for you to try again.</p>
+      </a>
+    </li>
+    <li>
+      <a class="card" href="quotes.html">
+        <p class="card__label">Nonsense</p>
+        <h2>Fifteen quotations</h2>
+        <p>Statements that mean a great deal and say nothing at all.</p>
+      </a>
+    </li>
+  </ul>
 
-  <p class="note">The Nothing Button — you will press it again, knowing exactly what will happen.</p>
+  <p class="note">Two pages, one machine, and a site that keeps growing — slowly, on purpose.</p>
 </main>
+
+<!-- nav.js builds the index at the foot of the page from the same list. -->
+<div data-pager></div>
 
 <footer>
   <p>The Useless Wiki · Web Technologies 2026</p>
 </footer>
 
 <script src="js/nav.js"></script>
-<script src="js/machine.js"></script>
 
 </body>
 </html>
