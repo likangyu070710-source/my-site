@@ -15,14 +15,24 @@
   <h1>Nonsense</h1>
   <p class="tagline">Fifteen statements that mean a great deal and say nothing at all.</p>
 
-  <!-- The first quotation is written into the HTML, so this box is never
-       empty. The script below only replaces it. -->
+  <!-- One quotation is written into the HTML, so this box is never empty.
+       The script below only replaces it — once on arrival, and again
+       every time the button is pressed. -->
   <aside class="hero-quote" data-random-quote>
-    <p class="eyebrow">Quotation of the visit</p>
+    <div class="hero-quote__head">
+      <p class="eyebrow">Quotation of the visit</p>
+      <!-- The visible word is short enough to sit beside the label on a
+           phone; the name the screen reader reads is the full one. -->
+      <button type="button" class="draw" data-draw>Another<span class="sr-only"> quotation</span></button>
+    </div>
     <blockquote>
       <p>Tomorrow is another day, broadly indistinguishable from this one.</p>
     </blockquote>
     <cite>Anon.</cite>
+    <!-- Not a live region on the box itself: a screen reader would then
+         read a whole sentence the moment the page opened. This line is
+         empty until a draw happens, so it only ever speaks when asked. -->
+    <p class="sr-only" role="status" aria-atomic="true" data-quote-status></p>
   </aside>
 
   <!-- Out of sight, in the outline: without it the fifteen have no heading

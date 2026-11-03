@@ -286,6 +286,22 @@ h1 {
   font: 400 24px/1.4 var(--serif);
 }
 
+/* The head of the box: the label on the left, the one control on the
+   right — the same furniture as the tab on a card. It sits above the
+   sentence on purpose, because a longer quotation pushes everything below
+   it down, and a button that slides away between two presses is a button
+   nobody presses twice. */
+.hero-quote__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem 1rem;
+  margin-bottom: .1rem;
+}
+
+.hero-quote__head .eyebrow { margin: 0; }
+
 .hero-quote cite {
   display: block;
   margin-top: .55rem;
@@ -294,6 +310,51 @@ h1 {
   letter-spacing: .10em;
   text-transform: uppercase;
   color: var(--dim);
+}
+
+/* The draw. A real <button>, so Tab reaches it and Enter or Space fires
+   it with nothing written here to make that happen. Square corners and a
+   single hairline, the same furniture as a card: it is a piece of the
+   catalogue you are allowed to press, which is why it is the only thing
+   in this box carrying orange.
+
+   It is hidden until the script adds .has-draw to the box, because a
+   button that cannot draw anything is worse than no button at all. The
+   sentence above it still reads with JavaScript off — that is the part
+   that has to survive. */
+.draw { display: none; }
+
+.hero-quote.has-draw .draw {
+  position: relative;      /* keeps the .sr-only half of the name inside */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: .35rem .9rem;
+  border: 1px solid var(--line-2);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 12px/1.35 var(--sans);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background-color .15s;
+}
+
+.draw:hover { border-color: var(--ink); color: var(--accent); }
+.draw:active { background: var(--accent-wash); }
+
+/* A new quotation arrives with a short rise and fade, so a press visibly
+   answers even before the sentence has been read. The reduced-motion rule
+   further down collapses this to nothing, which is the whole fade. */
+@keyframes quote-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-quote.is-drawn blockquote,
+.hero-quote.is-drawn cite {
+  animation: quote-in .26s ease-out both;
 }
 
 /* ---- the fifteen ------------------------------------------------------
@@ -492,7 +553,7 @@ input:focus-visible + .switch__label .switch__track {
     scroll-behavior: auto !important;
   }
 
-  .card, .card__tab, .machine__status,
+  .card, .card__tab, .machine__status, .draw,
   .box__lid, .switch__knob, .switch__track { transition: none !important; }
 }
 
